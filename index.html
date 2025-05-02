@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI chat</title>
+    <title>AI 猜數字遊戲</title>
     <style>
         body {
             font-family: 'Segoe UI', 'Noto Sans TC', Arial, sans-serif;
-            background: linear-gradient(135deg, #e0e7ff 0%, #f4f4f4 100%);
+            background: linear-gradient(135deg, #f7e8ff 0%, #e0f7fa 100%);
             margin: 0;
             padding: 0;
             min-height: 100vh;
         }
         .container {
-            max-width: 480px;
-            margin: 56px auto 0 auto;
-            background: #fff;
-            border-radius: 22px;
-            box-shadow: 0 8px 32px #0002, 0 1.5px 4px #0001;
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fffbe7;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px #b39ddb44, 0 1.5px 4px #0001;
             padding: 38px 30px 28px 30px;
             position: relative;
-            border: 1.5px solid #e0e7ff;
+            border: 2.5px solid #ffd54f;
             animation: fadeIn 1s;
         }
         @keyframes fadeIn {
@@ -29,27 +29,29 @@
         }
         h1 {
             text-align: center;
-            color: #2a2a4a;
-            font-size: 2.3rem;
+            color: #7c43bd;
+            font-size: 2.4rem;
             letter-spacing: 2.5px;
-            margin-bottom: 6px;
-            font-weight: 700;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-shadow: 0 2px 8px #e1bee7;
         }
         .subtitle {
             text-align: center;
-            color: #7b7b7b;
-            margin-bottom: 20px;
-            font-size: 1.08rem;
+            color: #ff9800;
+            margin-bottom: 22px;
+            font-size: 1.12rem;
+            font-weight: 600;
         }
         #chat {
-            height: 340px;
+            height: 320px;
             overflow-y: auto;
-            border: 1.5px solid #e0e7ff;
-            border-radius: 12px;
+            border: 2px dashed #ffd54f;
+            border-radius: 16px;
             padding: 18px 14px;
-            background: linear-gradient(120deg, #f8faff 80%, #e3eaff 100%);
+            background: linear-gradient(120deg, #fffde7 80%, #ffe0b2 100%);
             margin-bottom: 20px;
-            box-shadow: 0 1px 4px #0001;
+            box-shadow: 0 1px 8px #ffe08299;
         }
         .msg {
             margin: 14px 0;
@@ -59,37 +61,37 @@
         }
         .msg .user {
             color: #1976d2;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 2px;
         }
         .msg .ai {
-            color: #388e3c;
-            font-weight: 600;
+            color: #ff9800;
+            font-weight: 700;
             margin-bottom: 2px;
         }
         .msg.user-msg {
             align-items: flex-end;
         }
         .msg.user-msg .bubble {
-            background: linear-gradient(90deg, #e3f0ff 60%, #c7e0ff 100%);
+            background: linear-gradient(90deg, #e1bee7 60%, #b39ddb 100%);
             color: #222;
-            border-radius: 18px 18px 6px 18px;
-            padding: 12px 18px;
+            border-radius: 20px 20px 8px 20px;
+            padding: 13px 20px;
             max-width: 80%;
             margin-left: 40px;
-            box-shadow: 0 2px 8px #1976d222;
-            font-size: 1.08rem;
+            box-shadow: 0 2px 8px #b39ddb33;
+            font-size: 1.12rem;
             word-break: break-word;
         }
         .msg.ai-msg .bubble {
-            background: linear-gradient(90deg, #e8f5e9 60%, #d0f8ce 100%);
-            color: #222;
-            border-radius: 18px 18px 18px 6px;
-            padding: 12px 18px;
+            background: linear-gradient(90deg, #fff9c4 60%, #ffe082 100%);
+            color: #7c43bd;
+            border-radius: 20px 20px 20px 8px;
+            padding: 13px 20px;
             max-width: 80%;
             margin-right: 40px;
-            box-shadow: 0 2px 8px #388e3c22;
-            font-size: 1.08rem;
+            box-shadow: 0 2px 8px #ffd54f33;
+            font-size: 1.12rem;
             word-break: break-word;
         }
         #inputArea {
@@ -98,66 +100,72 @@
         }
         #userInput {
             flex: 1;
-            padding: 12px 14px;
-            border-radius: 10px;
-            border: 1.5px solid #bfcfff;
-            font-size: 1.08rem;
+            padding: 13px 15px;
+            border-radius: 12px;
+            border: 2px solid #ffd54f;
+            font-size: 1.12rem;
             outline: none;
             transition: border 0.2s, box-shadow 0.2s;
-            box-shadow: 0 1px 4px #1976d211;
+            box-shadow: 0 1px 4px #ffd54f22;
+            background: #fffde7;
         }
         #userInput:focus {
-            border: 1.5px solid #1976d2;
-            box-shadow: 0 2px 8px #1976d222;
+            border: 2px solid #7c43bd;
+            box-shadow: 0 2px 8px #b39ddb33;
         }
         #sendBtn {
-            padding: 12px 26px;
+            padding: 13px 28px;
             border: none;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%);
-            color: #fff;
-            font-size: 1.08rem;
-            font-weight: 700;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #ffd54f 60%, #ffb300 100%);
+            color: #7c43bd;
+            font-size: 1.12rem;
+            font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 2px 8px #1976d222;
+            box-shadow: 0 2px 8px #ffd54f33;
             transition: background 0.2s, box-shadow 0.2s;
         }
         #sendBtn:disabled {
-            background: #b0b0b0;
+            background: #ffe082;
+            color: #bdbdbd;
             cursor: not-allowed;
             box-shadow: none;
         }
         #apiKey {
             width: 100%;
             margin-bottom: 16px;
-            padding: 12px 14px;
-            border-radius: 10px;
-            border: 1.5px solid #bfcfff;
-            font-size: 1.08rem;
+            padding: 13px 15px;
+            border-radius: 12px;
+            border: 2px solid #ffd54f;
+            font-size: 1.12rem;
             outline: none;
             transition: border 0.2s, box-shadow 0.2s;
-            box-shadow: 0 1px 4px #1976d211;
+            box-shadow: 0 1px 4px #ffd54f22;
+            background: #fffde7;
         }
         #apiKey:focus {
-            border: 1.5px solid #1976d2;
-            box-shadow: 0 2px 8px #1976d222;
+            border: 2px solid #7c43bd;
+            box-shadow: 0 2px 8px #b39ddb33;
+        }
+        #apiKey {
+            display: none;
         }
         /* 捲軸美化 */
         #chat::-webkit-scrollbar {
             width: 8px;
         }
         #chat::-webkit-scrollbar-thumb {
-            background: #e0e7ff;
+            background: #ffe082;
             border-radius: 6px;
         }
         #chat::-webkit-scrollbar-track {
-            background: #f8faff;
+            background: #fffde7;
         }
         /* 手機響應式 */
         @media (max-width: 600px) {
             .container {
                 max-width: 98vw;
-                padding: 12vw 2vw 6vw 2vw;
+                padding: 10vw 2vw 6vw 2vw;
             }
             #chat {
                 height: 48vw;
@@ -168,12 +176,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>AI chat</h1>
-        <div class="subtitle">Gemini API 文字對話，請輸入 API Key</div>
+        <h1>AI 猜數字遊戲</h1>
+        <div class="subtitle">和 AI 一起玩 1~100 的猜數字遊戲，輸入「開始遊戲」或直接猜數字！</div>
         <input id="apiKey" type="password" placeholder="請輸入你的 Google AI API Key" />
         <div id="chat"></div>
         <div id="inputArea">
-            <input id="userInput" type="text" placeholder="輸入訊息..." />
+            <input id="userInput" type="text" placeholder="輸入「開始遊戲」或猜一個 1~100 的數字..." />
             <button id="sendBtn">送出</button>
         </div>
     </div>
@@ -183,6 +191,10 @@
         const sendBtn = document.getElementById('sendBtn');
         const apiKeyInput = document.getElementById('apiKey');
 
+        let gameActive = false;
+        let answer = null;
+        let guessCount = 0;
+
         function appendMsg(sender, text) {
             const div = document.createElement('div');
             div.className = 'msg ' + (sender === 'user' ? 'user-msg' : 'ai-msg');
@@ -191,44 +203,44 @@
             chat.scrollTop = chat.scrollHeight;
         }
 
-        async function sendToAI(message, apiKey) {
-            // Google Gemini API (PaLM 2) - 文字聊天
-            const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(apiKey);
-            const body = {
-                contents: [{ parts: [{ text: message }] }]
-            };
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            });
-            let data;
-            try {
-                data = await res.json();
-            } catch (e) {
-                throw new Error('API 回傳格式錯誤');
+        function aiGameReply(msg) {
+            if (!gameActive && /開始|start/i.test(msg)) {
+                answer = Math.floor(Math.random() * 100) + 1;
+                guessCount = 0;
+                gameActive = true;
+                return '遊戲開始！我已經想好 1~100 的數字，請猜一個數字。';
             }
-            if (!res.ok) {
-                // 顯示詳細錯誤
-                throw new Error('API 錯誤: ' + (data.error?.message || res.status));
+            if (!gameActive) {
+                return '請輸入「開始遊戲」來開始猜數字！';
             }
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || 'AI 沒有回應';
+            const num = parseInt(msg, 10);
+            if (isNaN(num) || num < 1 || num > 100) {
+                return '請輸入 1~100 的整數來猜數字。';
+            }
+            guessCount++;
+            if (num === answer) {
+                gameActive = false;
+                return `恭喜你猜對了！答案就是 ${answer}，你總共猜了 ${guessCount} 次。\n輸入「開始遊戲」再玩一次！`;
+            } else if (num < answer) {
+                return '太小了，再大一點！';
+            } else {
+                return '太大了，再小一點！';
+            }
         }
 
         sendBtn.onclick = async () => {
             const msg = userInput.value.trim();
             const apiKey = apiKeyInput.value.trim();
-            if (!msg || !apiKey) return;
+            if (!msg) return;
             appendMsg('user', msg);
             userInput.value = '';
             sendBtn.disabled = true;
-            try {
-                const aiReply = await sendToAI(msg, apiKey);
+            // 遊戲本地處理，不呼叫 API
+            setTimeout(() => {
+                const aiReply = aiGameReply(msg);
                 appendMsg('ai', aiReply);
-            } catch (e) {
-                appendMsg('ai', '發生錯誤：' + e.message);
-            }
-            sendBtn.disabled = false;
+                sendBtn.disabled = false;
+            }, 400);
         };
 
         userInput.addEventListener('keydown', e => {
